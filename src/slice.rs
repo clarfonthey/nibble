@@ -1,9 +1,9 @@
 //! Traits for dealing with slices of nibbles.
 use core::slice;
-use base::{u4hi, u4lo, u4};
-use iter::{NibblePairs, NibblePairsMut, Nibbles, NibblesMut};
-use pair::{U4HiCell, U4LoCell, U4Cell, u4x2};
-use common::{get_nib_ref, get_nib_mut};
+use crate::base::{u4hi, u4lo, u4};
+use crate::iter::{NibblePairs, NibblePairsMut, Nibbles, NibblesMut};
+use crate::pair::{U4HiCell, U4LoCell, U4Cell, u4x2};
+use crate::common::{get_nib_ref, get_nib_mut};
 
 pub(crate) mod private {
     use super::{slice, u4x2};
@@ -63,7 +63,7 @@ pub trait NibSliceExt: private::Sealed {
     }
 
     /// Gets a nibble at the given index.
-    fn get(&self, idx: usize) -> &u4 {
+    fn get(&self, idx: usize) -> &dyn u4 {
         get_nib_ref(self.iter().as_slice(), idx)
     }
 
@@ -157,7 +157,7 @@ pub trait NibSliceMutExt: NibSliceExt + private::SealedMut {
     }
 
     /// Mutably gets a nibble at the given index.
-    fn get_mut(&mut self, idx: usize) -> &U4Cell {
+    fn get_mut(&mut self, idx: usize) -> &dyn U4Cell {
         get_nib_mut(self.iter_mut().into_slice(), idx)
     }
 

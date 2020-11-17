@@ -1,9 +1,9 @@
 //! Types for arrays of nibbles.
 use std::{slice as stdslice, mem};
-use base::{u4lo, u4};
-use pair::u4x2;
-use slice::{self, NibSliceAligned, NibSliceAlignedMut, NibSliceFull, NibSliceNoR};
-use common::{get_nib, set_nib, shift_left, shift_right};
+use crate::base::{u4lo, u4};
+use crate::pair::u4x2;
+use crate::slice::{self, NibSliceAligned, NibSliceAlignedMut, NibSliceFull, NibSliceNoR};
+use crate::common::{get_nib, set_nib, shift_left, shift_right};
 
 /// A `Vec` of nibbles.
 #[derive(Clone)]

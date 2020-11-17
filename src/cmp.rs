@@ -1,15 +1,15 @@
 use arrayvec::Array;
 
-use array::{NibArray, NibArrayEven, NibArrayOdd, NibArrayVec};
-use base::{u4hi, u4lo, u4};
+use crate::array::{NibArray, NibArrayEven, NibArrayOdd, NibArrayVec};
+use crate::base::{u4hi, u4lo, u4};
 use core::{cmp, hash};
-use pair::u4x2;
-use slice::{NibSliceFull, NibSliceNoL, NibSliceNoR, NibSliceNoBoth};
-use slice::{NibSliceAligned, NibSliceAlignedMut, NibSliceUnaligned, NibSliceUnalignedMut};
-use slice::{NibSliceEvenMut, NibSliceEven, NibSliceOdd, NibSliceOddMut};
-use slice::{NibSliceExt, NibSlice, NibSliceMut};
-use slice::private::Sealed;
-use vec::NibVec;
+use crate::pair::u4x2;
+use crate::slice::{NibSliceFull, NibSliceNoL, NibSliceNoR, NibSliceNoBoth};
+use crate::slice::{NibSliceAligned, NibSliceAlignedMut, NibSliceUnaligned, NibSliceUnalignedMut};
+use crate::slice::{NibSliceEvenMut, NibSliceEven, NibSliceOdd, NibSliceOddMut};
+use crate::slice::{NibSliceExt, NibSlice, NibSliceMut};
+use crate::slice::private::Sealed;
+use crate::vec::NibVec;
 
 macro_rules! do_impl {
     ($($t:ident)*) => {
