@@ -138,8 +138,8 @@ impl<'a> Nibbles<'a> {
     }
 }
 impl<'a> Iterator for Nibbles<'a> {
-    type Item = &'a u4;
-    fn next(&mut self) -> Option<&'a u4> {
+    type Item = &'a dyn u4;
+    fn next(&mut self) -> Option<&'a dyn u4> {
         // taken directly from core::iter::FlatMap source;
         // we can't use FlatMap because it doesn't have an ExactSizeIterator implementation
         loop {
@@ -160,7 +160,7 @@ impl<'a> Iterator for Nibbles<'a> {
     }
 }
 impl<'a> DoubleEndedIterator for Nibbles<'a> {
-    fn next_back(&mut self) -> Option<&'a u4> {
+    fn next_back(&mut self) -> Option<&'a dyn u4> {
         // taken directly from core::iter::FlatMap source;
         // we can't use FlatMap because it doesn't have an ExactSizeIterator implementation
         loop {
@@ -209,8 +209,8 @@ impl<'a> NibblesMut<'a> {
     }
 }
 impl<'a> Iterator for NibblesMut<'a> {
-    type Item = &'a U4Cell;
-    fn next(&mut self) -> Option<&'a U4Cell> {
+    type Item = &'a dyn U4Cell;
+    fn next(&mut self) -> Option<&'a dyn U4Cell> {
         // taken directly from core::iter::FlatMap source;
         // we can't use FlatMap because it doesn't have an ExactSizeIterator implementation
         loop {
@@ -231,7 +231,7 @@ impl<'a> Iterator for NibblesMut<'a> {
     }
 }
 impl<'a> DoubleEndedIterator for NibblesMut<'a> {
-    fn next_back(&mut self) -> Option<&'a U4Cell> {
+    fn next_back(&mut self) -> Option<&'a dyn U4Cell> {
         // taken directly from core::iter::FlatMap source;
         // we can't use FlatMap because it doesn't have an ExactSizeIterator implementation
         loop {

@@ -82,7 +82,7 @@ pub(crate) fn get_nib<T: u4>(slice: &[u4x2], nibidx: usize) -> T {
     }
 }
 
-pub(crate) fn get_nib_ref(slice: &[u4x2], nibidx: usize) -> &u4 {
+pub(crate) fn get_nib_ref(slice: &[u4x2], nibidx: usize) -> &dyn u4 {
     let idx = nibidx >> 1;
     if nibidx & 1 == 0 {
         slice[idx].hi()
@@ -91,7 +91,7 @@ pub(crate) fn get_nib_ref(slice: &[u4x2], nibidx: usize) -> &u4 {
     }
 }
 
-pub(crate) fn get_nib_mut(slice: &mut [u4x2], nibidx: usize) -> &U4Cell {
+pub(crate) fn get_nib_mut(slice: &mut [u4x2], nibidx: usize) -> &dyn U4Cell {
     let idx = nibidx >> 1;
     if nibidx & 1 == 0 {
         slice[idx].hi_mut()

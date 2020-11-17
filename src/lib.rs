@@ -3,7 +3,6 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(not(feature = "std"), feature(alloc))]
 #![doc(html_root_url = "https://docs.charr.xyz/nibble/")]
-#![feature(try_from)]
 #![cfg_attr(test, deny(missing_debug_implementations, missing_docs, warnings))]
 #![feature(trace_macros)]
 

@@ -193,8 +193,8 @@ impl<A: Array<Item = u4x2>, T: u4> FromIterator<T> for NibArrayVec<A> {
         vec
     }
 }
-impl<'a, A: Array<Item = u4x2>> FromIterator<&'a u4> for NibArrayVec<A> {
-    fn from_iter<I: IntoIterator<Item = &'a u4>>(iter: I) -> Self {
+impl<'a, A: Array<Item = u4x2>> FromIterator<&'a dyn u4> for NibArrayVec<A> {
+    fn from_iter<I: IntoIterator<Item = &'a dyn u4>>(iter: I) -> Self {
         let mut vec = Self::new();
         vec.extend(iter);
         vec
@@ -214,8 +214,8 @@ impl<A: Array<Item = u4x2>, T: u4> Extend<T> for NibArrayVec<A> {
         }
     }
 }
-impl<'a, A: Array<Item = u4x2>> Extend<&'a u4> for NibArrayVec<A> {
-    fn extend<I: IntoIterator<Item = &'a u4>>(&mut self, iter: I) {
+impl<'a, A: Array<Item = u4x2>> Extend<&'a dyn u4> for NibArrayVec<A> {
+    fn extend<I: IntoIterator<Item = &'a dyn u4>>(&mut self, iter: I) {
         for nib in iter {
             self.push(nib.to_u4lo());
         }

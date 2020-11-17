@@ -224,12 +224,12 @@ impl From<u4x2> for u8 {
 /// Iterator over the nibbles in a pair.
 #[derive(Clone, Debug)]
 pub struct Iter<'a> {
-    hi: Option<&'a u4>,
-    lo: Option<&'a u4>,
+    hi: Option<&'a dyn u4>,
+    lo: Option<&'a dyn u4>,
 }
 impl<'a> Iterator for Iter<'a> {
-    type Item = &'a u4;
-    fn next(&mut self) -> Option<&'a u4> {
+    type Item = &'a dyn u4;
+    fn next(&mut self) -> Option<&'a dyn u4> {
         self.hi.take().or_else(|| self.lo.take())
     }
     fn size_hint(&self) -> (usize, Option<usize>) {
@@ -237,7 +237,7 @@ impl<'a> Iterator for Iter<'a> {
     }
 }
 impl<'a> DoubleEndedIterator for Iter<'a> {
-    fn next_back(&mut self) -> Option<&'a u4> {
+    fn next_back(&mut self) -> Option<&'a dyn u4> {
         self.lo.take().or_else(|| self.hi.take())
     }
 }
@@ -250,12 +250,12 @@ impl<'a> ExactSizeIterator for Iter<'a> {
 /// Mutable iterator over the nibbles in a pair.
 #[derive(Clone, Debug)]
 pub struct IterMut<'a> {
-    hi: Option<&'a U4Cell>,
-    lo: Option<&'a U4Cell>,
+    hi: Option<&'a dyn U4Cell>,
+    lo: Option<&'a dyn U4Cell>,
 }
 impl<'a> Iterator for IterMut<'a> {
-    type Item = &'a U4Cell;
-    fn next(&mut self) -> Option<&'a U4Cell> {
+    type Item = &'a dyn U4Cell;
+    fn next(&mut self) -> Option<&'a dyn U4Cell> {
         self.hi.take().or_else(|| self.lo.take())
     }
     fn size_hint(&self) -> (usize, Option<usize>) {
@@ -263,7 +263,7 @@ impl<'a> Iterator for IterMut<'a> {
     }
 }
 impl<'a> DoubleEndedIterator for IterMut<'a> {
-    fn next_back(&mut self) -> Option<&'a U4Cell> {
+    fn next_back(&mut self) -> Option<&'a dyn U4Cell> {
         self.lo.take().or_else(|| self.hi.take())
     }
 }
@@ -293,7 +293,7 @@ pub trait U4Cell: fmt::Debug {
     fn set<T: u4>(&self, nib: T) where Self: Sized;
 
     /// Swaps the nibble with the value of another nibble.
-    fn swap(&self, nib: &U4Cell);
+    fn swap(&self, nib: &dyn U4Cell);
 }
 
 /// A cell for mutating a high-order nibble.
@@ -324,7 +324,7 @@ impl U4Cell for U4HiCell {
         unsafe { &mut *self.inner.as_ptr() }.set_hi(nib)
     }
     #[inline]
-    fn swap(&self, nib: &U4Cell) {
+    fn swap(&self, nib: &dyn U4Cell) {
         let hi = self.get_hi();
         self.set_from_hi(nib.get_hi());
         nib.set_from_hi(hi);
@@ -364,7 +364,7 @@ impl U4Cell for U4LoCell {
         unsafe { &mut *self.inner.as_ptr() }.set_lo(nib)
     }
     #[inline]
-    fn swap(&self, nib: &U4Cell) {
+    fn swap(&self, nib: &dyn U4Cell) {
         let lo = self.get_lo();
         self.set_from_lo(nib.get_lo());
         nib.set_from_lo(lo);
@@ -383,8 +383,8 @@ mod tests {
     #[test]
     fn u4cell_works() {
         let mut byte = u4x2::from_byte(0x13);
-        byte.lo_mut() as &U4Cell;
-        byte.hi_mut() as &U4Cell;
+        byte.lo_mut() as &dyn U4Cell;
+        byte.hi_mut() as &dyn U4Cell;
     }
 
     #[test]

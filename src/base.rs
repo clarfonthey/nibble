@@ -84,9 +84,9 @@ pub trait u4
         Self: Sized
     {
         match b {
-            b'0'...b'9' => Some(Self::from_lo(b - b'0')),
-            b'A'...b'F' => Some(Self::from_lo(b - b'A' + 0xA)),
-            b'a'...b'f' => Some(Self::from_lo(b - b'a' + 0xa)),
+            b'0'..=b'9' => Some(Self::from_lo(b - b'0')),
+            b'A'..=b'F' => Some(Self::from_lo(b - b'A' + 0xA)),
+            b'a'..=b'f' => Some(Self::from_lo(b - b'a' + 0xa)),
             _ => None,
         }
     }
@@ -95,8 +95,8 @@ pub trait u4
     fn to_lower_ascii_digit(&self) -> u8 {
         let val = self.to_lo();
         match val {
-            0x0...0x9 => b'0' + val,
-            0xa...0xf => b'a' + val - 0xa,
+            0x0..=0x9 => b'0' + val,
+            0xa..=0xf => b'a' + val - 0xa,
             _ => unreachable!(),
         }
     }
@@ -105,8 +105,8 @@ pub trait u4
     fn to_upper_ascii_digit(&self) -> u8 {
         let val = self.to_lo();
         match val {
-            0x0...0x9 => b'0' + val,
-            0xA...0xF => b'A' + val - 0xA,
+            0x0..=0x9 => b'0' + val,
+            0xA..=0xF => b'A' + val - 0xA,
             _ => unreachable!(),
         }
     }
@@ -117,9 +117,9 @@ pub trait u4
         Self: Sized
     {
         match c {
-            '0'...'9' => Some(Self::from_lo(u32::from(c) as u8 - b'0')),
-            'A'...'F' => Some(Self::from_lo(u32::from(c) as u8 - b'A' + 0xA)),
-            'a'...'f' => Some(Self::from_lo(u32::from(c) as u8 - b'a' + 0xa)),
+            '0'..='9' => Some(Self::from_lo(u32::from(c) as u8 - b'0')),
+            'A'..='F' => Some(Self::from_lo(u32::from(c) as u8 - b'A' + 0xA)),
+            'a'..='f' => Some(Self::from_lo(u32::from(c) as u8 - b'a' + 0xa)),
             _ => None,
         }
     }
@@ -292,6 +292,11 @@ impl u4 for u4hi {
         unsafe { higher_to_lower(self.hi_and_lo) }
     }
 }
+impl Default for u4hi {
+    fn default() -> Self {
+        u4hi { hi_and_lo: 0 }
+    }
+}
 
 /// A nibble stored in the low-order bits of a byte.
 #[derive(Copy, Clone)]
@@ -330,6 +335,11 @@ impl From<u4lo> for u4hi {
 impl From<u4hi> for u4lo {
     fn from(hi: u4hi) -> u4lo {
         u4lo::from_lo(hi.to_lo())
+    }
+}
+impl Default for u4lo {
+    fn default() -> Self {
+        u4lo { hi_and_lo: 0 }
     }
 }
 
@@ -386,7 +396,7 @@ mod tests {
     fn u4_works() {
         let lo = u4lo::from_lo(3);
         let hi = u4hi::from_lo(5);
-        &lo as &u4;
-        &hi as &u4;
+        &lo as &dyn u4;
+        &hi as &dyn u4;
     }
 }

@@ -63,7 +63,7 @@ pub trait NibSliceExt: private::Sealed {
     }
 
     /// Gets a nibble at the given index.
-    fn get(&self, idx: usize) -> &u4 {
+    fn get(&self, idx: usize) -> &dyn u4 {
         get_nib_ref(self.iter().as_slice(), idx)
     }
 
@@ -157,7 +157,7 @@ pub trait NibSliceMutExt: NibSliceExt + private::SealedMut {
     }
 
     /// Mutably gets a nibble at the given index.
-    fn get_mut(&mut self, idx: usize) -> &U4Cell {
+    fn get_mut(&mut self, idx: usize) -> &dyn U4Cell {
         get_nib_mut(self.iter_mut().into_slice(), idx)
     }
 
