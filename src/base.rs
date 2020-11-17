@@ -2,9 +2,9 @@
 use arrayvec::{ArrayString, ArrayVec};
 
 use core::fmt;
-use common::{higher_to_higher, higher_to_lower, lower_to_higher, lower_to_lower};
-use common::{has_higher, has_lower};
-use common::{bits, octal_digits, decimal_digits};
+use crate::common::{higher_to_higher, higher_to_lower, lower_to_higher, lower_to_lower};
+use crate::common::{has_higher, has_lower};
+use crate::common::{bits, octal_digits, decimal_digits};
 
 
 /// A nibble.

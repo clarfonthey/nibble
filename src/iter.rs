@@ -1,7 +1,7 @@
 //! Various iterators for slices of nibbles.
 use core::slice;
-use base::u4;
-use pair::{Iter, IterMut, U4Cell, u4x2};
+use crate::base::u4;
+use crate::pair::{Iter, IterMut, U4Cell, u4x2};
 
 /// Iterator over pairs of nibbles in a slice.
 #[derive(Debug)]

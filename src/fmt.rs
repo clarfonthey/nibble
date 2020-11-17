@@ -3,15 +3,15 @@ use core::str::FromStr;
 
 use arrayvec::{Array};
 
-use base::{u4, u4hi, u4lo};
-use base::{ParseNibbleError};
-use pair::u4x2;
-use vec::NibVec;
-use array::{NibArrayVec, NibArray, NibArrayOdd, NibArrayEven};
-use slice::{NibSliceFull, NibSliceNoL, NibSliceNoR, NibSliceNoBoth};
-use slice::{NibSliceAligned, NibSliceAlignedMut, NibSliceUnaligned, NibSliceUnalignedMut};
-use slice::{NibSliceEven, NibSliceEvenMut, NibSliceOdd, NibSliceOddMut};
-use slice::{NibSlice, NibSliceMut, NibSliceExt};
+use crate::base::{u4, u4hi, u4lo};
+use crate::base::{ParseNibbleError};
+use crate::pair::u4x2;
+use crate::vec::NibVec;
+use crate::array::{NibArrayVec, NibArray, NibArrayOdd, NibArrayEven};
+use crate::slice::{NibSliceFull, NibSliceNoL, NibSliceNoR, NibSliceNoBoth};
+use crate::slice::{NibSliceAligned, NibSliceAlignedMut, NibSliceUnaligned, NibSliceUnalignedMut};
+use crate::slice::{NibSliceEven, NibSliceEvenMut, NibSliceOdd, NibSliceOddMut};
+use crate::slice::{NibSlice, NibSliceMut, NibSliceExt};
 
 macro_rules! do_nibble {
     ($($t:ident)*) => {

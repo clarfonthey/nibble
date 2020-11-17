@@ -2,9 +2,9 @@ use core::ops::{Add, Div, Mul, Rem, Sub};
 use core::ops::{Not, BitAnd, BitOr, BitXor, Shl, Shr};
 use core::ops::{AddAssign, DivAssign, MulAssign, RemAssign, SubAssign};
 use core::ops::{BitAndAssign, BitOrAssign, BitXorAssign, ShlAssign, ShrAssign};
-use base::{u4lo, u4hi, u4};
-use common::{has_higher, ToLo};
-use pair::u4x2;
+use crate::base::{u4lo, u4hi, u4};
+use crate::common::{has_higher, ToLo};
+use crate::pair::u4x2;
 
 macro_rules! do_ref {
     (

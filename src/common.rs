@@ -1,5 +1,5 @@
-use base::u4;
-use pair::{u4x2, U4Cell};
+use crate::base::u4;
+use crate::pair::{u4x2, U4Cell};
 
 #[inline(always)] pub(crate) fn has_lower(byte: u8) -> bool { byte & 0b0000_1111 != 0 }
 #[inline(always)] pub(crate) fn has_higher(byte: u8) -> bool { byte & 0b1111_0000 != 0 }

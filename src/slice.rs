@@ -1,9 +1,9 @@
 //! Traits for dealing with slices of nibbles.
 use core::slice;
-use base::{u4hi, u4lo, u4};
-use iter::{NibblePairs, NibblePairsMut, Nibbles, NibblesMut};
-use pair::{U4HiCell, U4LoCell, U4Cell, u4x2};
-use common::{get_nib_ref, get_nib_mut};
+use crate::base::{u4hi, u4lo, u4};
+use crate::iter::{NibblePairs, NibblePairsMut, Nibbles, NibblesMut};
+use crate::pair::{U4HiCell, U4LoCell, U4Cell, u4x2};
+use crate::common::{get_nib_ref, get_nib_mut};
 
 pub(crate) mod private {
     use super::{slice, u4x2};

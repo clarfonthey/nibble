@@ -1,7 +1,7 @@
 //! Types for manipulating pairs of nibbles in a single byte.
 use arrayvec::ArrayString;
 
-use base::{u4, u4hi, u4lo};
+use crate::base::{u4, u4hi, u4lo};
 use core::{cell, fmt};
 
 /// A `u8` split into its component nibbles.

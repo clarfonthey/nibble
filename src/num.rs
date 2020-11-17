@@ -1,7 +1,7 @@
 use num_traits::*;
-use base::{u4, u4hi, u4lo};
-use common::has_higher;
-use base::ParseNibbleError;
+use crate::base::{u4, u4hi, u4lo};
+use crate::common::has_higher;
+use crate::base::ParseNibbleError;
 
 macro_rules! do_checked {
     (
@@ -223,7 +223,7 @@ do_extras! { u4hi u4lo }
 
 #[cfg(test)]
 mod tests {
-    use base::{u4hi, u4lo, u4};
+    use crate::base::{u4hi, u4lo, u4};
     use num_traits::*;
 
     #[test]

@@ -3,10 +3,10 @@ use core::ops;
 use core::slice::{self as stdslice, from_raw_parts, from_raw_parts_mut};
 use core::iter::FromIterator;
 use arrayvec::{Array, ArrayVec, CapacityError};
-use base::{u4lo, u4};
-use pair::u4x2;
-use slice::{self, NibSliceAligned, NibSliceAlignedMut, NibSliceFull, NibSliceNoR};
-use common::{get_nib, shift_left, shift_right, set_nib};
+use crate::base::{u4lo, u4};
+use crate::pair::u4x2;
+use crate::slice::{self, NibSliceAligned, NibSliceAlignedMut, NibSliceFull, NibSliceNoR};
+use crate::common::{get_nib, shift_left, shift_right, set_nib};
 
 /// An `ArrayVec` of nibbles.
 #[derive(Clone)]
@@ -140,11 +140,6 @@ impl<A: Array<Item = u4x2>> NibArrayVec<A> {
         self.has_right_lo = true;
     }
 
-    /// Disposes of the vector.
-    pub fn dispose(self) {
-        self.inner.dispose();
-    }
-
     /// Converts the vector into an odd array, if it's full to one less than capacity.
     pub fn into_odd_array(self) -> Result<NibArrayOdd<A>, Self> {
         if self.inner.is_full() && !self.has_right_lo {
@@ -256,13 +251,13 @@ impl<A: Array<Item = u4x2>> From<A> for NibArrayEven<A> {
 impl<A: Array<Item = u4x2>> ops::Deref for NibArrayEven<A> {
     type Target = NibSliceFull;
     fn deref(&self) -> &NibSliceFull {
-        let slice = unsafe { from_raw_parts(A::as_ptr(&self.inner), A::capacity()) };
+        let slice = unsafe { from_raw_parts(self.inner.as_slice().as_ptr(), A::CAPACITY) };
         unsafe { &*(slice as *const [u4x2] as *const NibSliceFull) }
     }
 }
 impl<A: Array<Item = u4x2>> ops::DerefMut for NibArrayEven<A> {
     fn deref_mut(&mut self) -> &mut NibSliceFull {
-        let slice = unsafe { from_raw_parts_mut(A::as_mut_ptr(&mut self.inner), A::capacity()) };
+        let slice = unsafe { from_raw_parts_mut(self.inner.as_mut_slice().as_mut_ptr(), A::CAPACITY) };
         unsafe { &mut *(slice as *mut [u4x2] as *mut NibSliceFull) }
     }
 }
@@ -273,13 +268,13 @@ impl<A: Array<Item = u4x2>> slice::private::Sealed for NibArrayEven<A> {
     fn has_right_lo(&self) -> bool { true }
     #[inline(always)]
     fn iter(&self) -> stdslice::Iter<u4x2> {
-        unsafe { stdslice::from_raw_parts(A::as_ptr(&self.inner), A::capacity()) }.iter()
+        unsafe { stdslice::from_raw_parts(self.inner.as_slice().as_ptr(), A::CAPACITY) }.iter()
     }
 }
 impl<A: Array<Item = u4x2>> slice::private::SealedMut for NibArrayEven<A> {
     #[inline(always)]
     fn iter_mut(&mut self) -> stdslice::IterMut<u4x2> {
-        unsafe { stdslice::from_raw_parts_mut(A::as_mut_ptr(&mut self.inner), A::capacity()) }.iter_mut()
+        unsafe { stdslice::from_raw_parts_mut(self.inner.as_mut_slice().as_mut_ptr(), A::CAPACITY) }.iter_mut()
     }
 }
 impl<A: Array<Item = u4x2>> slice::NibSliceExt for NibArrayEven<A> {}
@@ -297,13 +292,13 @@ impl<A: Array<Item = u4x2>> From<A> for NibArrayOdd<A> {
 impl<A: Array<Item = u4x2>> ops::Deref for NibArrayOdd<A> {
     type Target = NibSliceNoR;
     fn deref(&self) -> &NibSliceNoR {
-        let slice = unsafe { from_raw_parts(A::as_ptr(&self.inner), A::capacity()) };
+        let slice = unsafe { from_raw_parts(self.inner.as_slice().as_ptr(), A::CAPACITY) };
         unsafe { &*(slice as *const [u4x2] as *const NibSliceNoR) }
     }
 }
 impl<A: Array<Item = u4x2>> ops::DerefMut for NibArrayOdd<A> {
     fn deref_mut(&mut self) -> &mut NibSliceNoR {
-        let slice = unsafe { from_raw_parts_mut(A::as_mut_ptr(&mut self.inner), A::capacity()) };
+        let slice = unsafe { from_raw_parts_mut(self.inner.as_mut_slice().as_mut_ptr(), A::CAPACITY) };
         unsafe { &mut *(slice as *mut [u4x2] as *mut NibSliceNoR) }
     }
 }
@@ -314,13 +309,13 @@ impl<A: Array<Item = u4x2>> slice::private::Sealed for NibArrayOdd<A> {
     fn has_right_lo(&self) -> bool { false }
     #[inline(always)]
     fn iter(&self) -> stdslice::Iter<u4x2> {
-        unsafe { stdslice::from_raw_parts(A::as_ptr(&self.inner), A::capacity()) }.iter()
+        unsafe { stdslice::from_raw_parts(self.inner.as_slice().as_ptr(), A::CAPACITY) }.iter()
     }
 }
 impl<A: Array<Item = u4x2>> slice::private::SealedMut for NibArrayOdd<A> {
     #[inline(always)]
     fn iter_mut(&mut self) -> stdslice::IterMut<u4x2> {
-        unsafe { stdslice::from_raw_parts_mut(A::as_mut_ptr(&mut self.inner), A::capacity()) }.iter_mut()
+        unsafe { stdslice::from_raw_parts_mut(self.inner.as_mut_slice().as_mut_ptr(), A::CAPACITY) }.iter_mut()
     }
 }
 impl<A: Array<Item = u4x2>> slice::NibSliceExt for NibArrayOdd<A> {}
@@ -361,16 +356,16 @@ impl<A: Array<Item = u4x2>> slice::private::Sealed for NibArray<A> {
 
     fn iter(&self) -> stdslice::Iter<u4x2> {
         match *self {
-            NibArray::Even(ref s) => unsafe { stdslice::from_raw_parts(A::as_ptr(&s.inner), A::capacity()) }.iter(),
-            NibArray::Odd(ref s) => unsafe { stdslice::from_raw_parts(A::as_ptr(&s.inner), A::capacity()) }.iter(),
+            NibArray::Even(ref s) => unsafe { stdslice::from_raw_parts(s.inner.as_slice().as_ptr(), A::CAPACITY) }.iter(),
+            NibArray::Odd(ref s) => unsafe { stdslice::from_raw_parts(s.inner.as_slice().as_ptr(), A::CAPACITY) }.iter(),
         }
     }
 }
 impl<A: Array<Item = u4x2>> slice::private::SealedMut for NibArray<A> {
     fn iter_mut(&mut self) -> stdslice::IterMut<u4x2> {
         match *self {
-            NibArray::Even(ref mut s) => unsafe { stdslice::from_raw_parts_mut(A::as_mut_ptr(&mut s.inner), A::capacity()) }.iter_mut(),
-            NibArray::Odd(ref mut s) => unsafe { stdslice::from_raw_parts_mut(A::as_mut_ptr(&mut s.inner), A::capacity()) }.iter_mut(),
+            NibArray::Even(ref mut s) => unsafe { stdslice::from_raw_parts_mut(s.inner.as_mut_slice().as_mut_ptr(), A::CAPACITY) }.iter_mut(),
+            NibArray::Odd(ref mut s) => unsafe { stdslice::from_raw_parts_mut(s.inner.as_mut_slice().as_mut_ptr(), A::CAPACITY) }.iter_mut(),
         }
     }
 }
