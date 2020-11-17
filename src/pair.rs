@@ -220,6 +220,13 @@ impl From<u4x2> for u8 {
         *pair.byte()
     }
 }
+impl Default for u4x2 {
+    fn default() -> Self {
+        u4x2 {
+            byte: 0
+        }
+    }
+}
 
 /// Iterator over the nibbles in a pair.
 #[derive(Clone, Debug)]
