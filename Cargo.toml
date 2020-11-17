@@ -1,6 +1,6 @@
 [package]
 name = "nibble"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Clar Charr <clar@charr.xyz>"]
 description = "Ways of parsing four-bit integers, i.e. nibbles."
 documentation = "https://docs.charr.xyz/nibble/nibble"
@@ -11,9 +11,9 @@ license = "CC0-1.0"
 exclude = [".gitignore"]
 
 [dependencies]
-arrayvec = { version = "0.4.2", default-features = false }
-cfg-if = "0.1.2"
-num-traits = "0.1.40"
+arrayvec = { version = "0.5.2", default-features = false }
+cfg-if = "1.0.0"
+num-traits = "0.2.14"
 
 [features]
 default = ["std"]
