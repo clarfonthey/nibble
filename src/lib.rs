@@ -1,4 +1,4 @@
-//! This crate contains all sorts of types for dealing with nibbles, i.e. four-byte numbers.
+//! This crate contains all sorts of types for dealing with nibbles, i.e. four-bit numbers.
 //! Curretly, only unsigned nibbles are supported.
 #![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(not(feature = "std"), feature(alloc))]
